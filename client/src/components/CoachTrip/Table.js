@@ -131,14 +131,16 @@ export default function MyTable() {
             <MenuItem value="Tình trạng">Tình trạng</MenuItem>
           </Select>
         </FormControl> */}
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={handleOpen}
-          >
-            Thêm
-          </Button>
+          {user?.role === 1 && (
+            <Button
+              className={classes.button}
+              variant="contained"
+              color="primary"
+              onClick={handleOpen}
+            >
+              Thêm
+            </Button>
+          )}
         </CardContent>
         <CardContent>
           <TableContainer component={Paper}>
@@ -179,35 +181,48 @@ export default function MyTable() {
                       {coachTrip.seat + "/" + coachTrip.seatMax}
                     </TableCell>
                     <TableCell align="right">
-                      {coachTrip.passengerNames.includes(user.name) ? (
-                        <Button variant="contained" color="primary" disabled>
-                          Đã mua
-                        </Button>
+                      {user?.role === 0 ? (
+                        <>
+                          {coachTrip.passengerNames.includes(user.name) ? (
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              disabled
+                            >
+                              Đã mua
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="contained"
+                              color="primary"
+                              onClick={() => handleBuyTicket(coachTrip)}
+                            >
+                              Đặt vé
+                            </Button>
+                          )}
+                        </>
                       ) : (
-                        <Button
-                          variant="contained"
-                          color="primary"
-                          onClick={() => handleBuyTicket(coachTrip)}
-                        >
-                          Mua vé
-                        </Button>
+                        <div>
+                          <Button
+                            variant="contained"
+                            color="primary"
+                            style={{ marginLeft: 5 }}
+                            onClick={() => handleEdit(coachTrip)}
+                          >
+                            Chi tiết
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            style={{ marginLeft: 5 }}
+                            onClick={() =>
+                              dispatch(deleteCoachTrip(coachTrip._id))
+                            }
+                          >
+                            Xóa
+                          </Button>
+                        </div>
                       )}
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        style={{ marginLeft: 5 }}
-                        onClick={() => handleEdit(coachTrip)}
-                      >
-                        Chi tiết
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        style={{ marginLeft: 5 }}
-                        onClick={() => dispatch(deleteCoachTrip(coachTrip._id))}
-                      >
-                        Xóa
-                      </Button>
                     </TableCell>
                   </TableRow>
                 ))}

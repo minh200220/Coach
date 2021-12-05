@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   TableCell,
   TableRow,
@@ -25,23 +25,11 @@ const Add = ({ setAdd }) => {
     distance: "",
     time: "",
     price: "",
-    coachType: "",
+    coachType: 0,
     departTime: [],
   });
-  const [coachs, setCoachs] = useState([]);
   const dispatch = useDispatch();
   const classes = useStyles();
-
-  useEffect(() => {
-    const getCoachs = async () => {
-      const res = await fetch("http://localhost:5000/coachs");
-      const data = await res.json();
-      setCoachs(data);
-      // console.log(coachs);
-    };
-
-    getCoachs();
-  }, [coachs]);
 
   const handleSubmit = () => {
     if (
@@ -54,7 +42,7 @@ const Add = ({ setAdd }) => {
     ) {
       dispatch(createRoute(route));
     } else {
-      console.log("Error! Lack of data!");
+      alert("Error! Lack of data!");
     }
     setAdd(false);
   };
@@ -98,11 +86,18 @@ const Add = ({ setAdd }) => {
             onChange={(e) => setRoute({ ...route, coachType: e.target.value })}
             required
           >
-            {coachs?.map((c) => (
-              <MenuItem key={c._id} value={c.brand}>
-                {c.brand}
-              </MenuItem>
-            ))}
+            <MenuItem key="1" value={16}>
+              16 chỗ
+            </MenuItem>
+            <MenuItem key="2" value={30}>
+              30 chỗ
+            </MenuItem>
+            <MenuItem key="3" value={35}>
+              35 chỗ
+            </MenuItem>
+            <MenuItem key="4" value={45}>
+              45 chỗ
+            </MenuItem>
           </Select>
         </FormControl>
       </TableCell>
@@ -110,7 +105,7 @@ const Add = ({ setAdd }) => {
         <Input
           type="text"
           name="departTime"
-          placeholder="6h,12h,15h"
+          placeholder="VD: 6h,12h,15h"
           onChange={(e) =>
             setRoute({ ...route, departTime: e.target.value.split(",") })
           }

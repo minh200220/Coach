@@ -56,24 +56,29 @@ const MyNav = () => {
       {user && (
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
+            {user?.result?.role === 1 && (
+              <>
+                <NavItem>
+                  <NavLink href="/coachs/">Xe khách</NavLink>
+                </NavItem>
+                <NavItem>
+                  <NavLink href="/drivers/">Tài xế</NavLink>
+                </NavItem>
+              </>
+            )}
             <NavItem>
               <NavLink href="/routes/">Tuyến đường</NavLink>
             </NavItem>
             <NavItem>
-              <NavLink href="/coachs/">Xe khách</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/drivers/">Tài xế</NavLink>
-            </NavItem>
-            <NavItem>
-              <NavLink href="/tickets/">Vé xe</NavLink>
-            </NavItem>
-            <NavItem>
               <NavLink href="/coachtrips/">Chuyến xe</NavLink>
             </NavItem>
-            <NavItem>
-              <NavLink href="/profile/">Cá nhân</NavLink>
-            </NavItem>
+            {user?.result?.role !== 1 && (
+              <div>
+                <NavItem>
+                  <NavLink href="/tickets/">Vé xe</NavLink>
+                </NavItem>
+              </div>
+            )}
           </Nav>
           <NavbarText>
             <Dropdown isOpen={dropdownOpen} toggle={toggleFunc}>

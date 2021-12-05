@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { TableCell, TableRow, Button } from "@material-ui/core";
+import {
+  TableCell,
+  TableRow,
+  Button,
+  FormControl,
+  Select,
+  MenuItem,
+} from "@material-ui/core";
 import { Input } from "reactstrap";
 import { useDispatch } from "react-redux";
 
@@ -33,11 +40,28 @@ const Add = ({ setAdd }) => {
         />
       </TableCell>
       <TableCell align="right">
-        <Input
-          type="text"
-          name="seatNumber"
-          onChange={(e) => setCoach({ ...coach, seatNumber: e.target.value })}
-        />
+        <FormControl variant="outlined" style={{ width: 120 }}>
+          <Select
+            labelId="select-lable-1"
+            label="Loại xe"
+            name="coachType"
+            onChange={(e) => setCoach({ ...coach, seatNumber: e.target.value })}
+            required
+          >
+            <MenuItem key="1" value={16}>
+              16 chỗ
+            </MenuItem>
+            <MenuItem key="2" value={30}>
+              30 chỗ
+            </MenuItem>
+            <MenuItem key="3" value={35}>
+              35 chỗ
+            </MenuItem>
+            <MenuItem key="4" value={45}>
+              45 chỗ
+            </MenuItem>
+          </Select>
+        </FormControl>
       </TableCell>
       <TableCell align="right">
         <Input

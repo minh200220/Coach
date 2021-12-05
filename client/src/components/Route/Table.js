@@ -42,6 +42,7 @@ const useStyles = makeStyles({
 
 export default function BasicTable() {
   const [add, setAdd] = useState(false);
+  const user = JSON.parse(localStorage.getItem("profile")).result;
   const routes = useSelector((state) => state.routes);
   const classes = useStyles();
 
@@ -112,14 +113,16 @@ export default function BasicTable() {
             <MenuItem value="Tình trạng">Tình trạng</MenuItem>
           </Select>
         </FormControl> */}
-        <Button
-          className={classes.button}
-          variant="contained"
-          color="primary"
-          onClick={() => setAdd(true)}
-        >
-          Thêm
-        </Button>
+        {user?.role === 1 && (
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            onClick={() => setAdd(true)}
+          >
+            Thêm
+          </Button>
+        )}
       </CardContent>
       <CardContent>
         <TableContainer component={Paper}>
@@ -127,12 +130,14 @@ export default function BasicTable() {
             <TableHead>
               <TableRow>
                 <TableCell>Tuyến đường</TableCell>
-                <TableCell align="right">Khoảng cách</TableCell>
-                <TableCell align="right">Thời gian</TableCell>
-                <TableCell align="right">Giá tiền</TableCell>
+                <TableCell align="right">Khoảng cách (km)</TableCell>
+                <TableCell align="right">Thời gian đi (giờ) </TableCell>
+                <TableCell align="right">Giá tiền (VNĐ)</TableCell>
                 <TableCell align="right">Loại xe</TableCell>
                 <TableCell align="right">Giờ xuất phát</TableCell>
-                <TableCell align="right">Thao tác</TableCell>
+                {user?.role === 1 && (
+                  <TableCell align="right">Thao tác</TableCell>
+                )}
               </TableRow>
             </TableHead>
 
@@ -145,7 +150,7 @@ export default function BasicTable() {
                   )
                 : routes
               ).map((route) => (
-                <Row key={route._id} route={route} />
+                <Row key={route._id} route={route} user={user} />
               ))}
 
               {emptyRows > 0 && (

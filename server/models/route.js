@@ -5,7 +5,7 @@ const routeSchema = mongoose.Schema({
   distance: String,
   time: String,
   price: Number,
-  coachType: String,
+  coachType: Number,
   departTime: {
     type: [String],
     default: [],

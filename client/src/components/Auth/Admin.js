@@ -104,11 +104,11 @@ export default function Auth() {
               <>
                 <Grid item xs={12}>
                   <TextField
-                    name="ten"
+                    name="name"
                     variant="outlined"
                     required
                     fullWidth
-                    id="ten"
+                    id="name"
                     label="Tên"
                     autoFocus
                     onChange={handleChange}

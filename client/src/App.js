@@ -8,7 +8,7 @@ import Admin from "./components/Auth/Admin";
 import Coach from "./components/Coach/Coach";
 import Driver from "./components/Driver/Driver";
 import Routes from "./components/Route/Route";
-import Profile from "./components/Profile/Profile";
+// import Profile from "./components/Profile/Profile";
 import Ticket from "./components/Ticket/Ticket";
 import CoachTrip from "./components/CoachTrip/CoachTrip";
 
@@ -26,7 +26,7 @@ const App = () => {
           <Route path="/drivers" exact component={Driver} />
           <Route path="/coachtrips" exact component={CoachTrip} />
           <Route path="/tickets" exact component={Ticket} />
-          <Route path="/profile" exact component={Profile} />
+          {/* <Route path="/profile" exact component={Profile} /> */}
           <Route
             path="/auth"
             exact

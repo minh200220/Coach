@@ -7,8 +7,9 @@ export const signin = (formData, history) => async (dispatch) => {
 
     dispatch({ type: AUTH, data });
 
-    history.push("/coachs");
+    history.push("/routes");
   } catch (error) {
+    alert("Wrong credentials");
     console.log(error);
   }
 };
@@ -19,7 +20,7 @@ export const signup = (formData, history) => async (dispatch) => {
 
     dispatch({ type: AUTH, data });
 
-    history.push("/coachs");
+    history.push("/routes");
   } catch (error) {
     console.log(error);
   }

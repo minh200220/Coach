@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 
 import { updateRoute, deleteRoute } from "../../actions/routes";
 
-const Row = ({ route }) => {
+const Row = ({ route, user }) => {
   const [edit, setEdit] = useState(false);
   const [data, setData] = useState(route);
   const dispatch = useDispatch();
@@ -15,7 +15,6 @@ const Row = ({ route }) => {
       dispatch(updateRoute(data._id, data));
     }
 
-    // console.log(group);
     setEdit(!edit);
   };
   return (
@@ -67,12 +66,12 @@ const Row = ({ route }) => {
       <TableCell style={{ width: 160 }} align="right">
         {edit ? (
           <Input
-            type="text"
+            type="number"
             value={data.coachType}
             onChange={(e) => setData({ ...data, coachType: e.target.value })}
           />
         ) : (
-          data.coachType
+          data.coachType + " chỗ"
         )}
       </TableCell>
       <TableCell style={{ width: 160 }} align="right">
@@ -88,19 +87,21 @@ const Row = ({ route }) => {
           data.departTime.join(",")
         )}
       </TableCell>
-      <TableCell align="right">
-        <Button variant="contained" color="primary" onClick={handleSubmit}>
-          {edit ? "Xong" : "Sửa"}
-        </Button>
-        <Button
-          variant="contained"
-          color="secondary"
-          style={{ marginLeft: 5 }}
-          onClick={() => dispatch(deleteRoute(data._id))}
-        >
-          Xóa
-        </Button>
-      </TableCell>
+      {user?.role === 1 && (
+        <TableCell align="right">
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            {edit ? "Xong" : "Sửa"}
+          </Button>
+          <Button
+            variant="contained"
+            color="secondary"
+            style={{ marginLeft: 5 }}
+            onClick={() => dispatch(deleteRoute(data._id))}
+          >
+            Xóa
+          </Button>
+        </TableCell>
+      )}
     </TableRow>
   );
 };

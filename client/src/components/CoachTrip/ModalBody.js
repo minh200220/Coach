@@ -113,22 +113,25 @@ const ModalBody = ({ handleClose, coachTrip, setCoachTrip }) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleChangeRoute = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value.fromto,
+      seatMax: e.target.value.coachType,
+    });
+    setSelect({ ...select, times: e.target.value.departTime });
+  };
+
   const handleChangeCoach = (e) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value.brand,
-      seatMax: e.target.value.seatNumber,
     });
   };
 
   const handleChangeDriver = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value.name });
-    setSelect({ ...select, seatMax: e.target.value.seatMax });
-  };
-
-  const handleChangeRoute = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value.fromto });
-    setSelect({ ...select, times: e.target.value.departTime });
+    // setSelect({ ...select, seatMax: e.target.value.seatMax });
   };
 
   const handleSubmit = (e) => {
@@ -183,26 +186,6 @@ const ModalBody = ({ handleClose, coachTrip, setCoachTrip }) => {
             </Grid>
             <Grid item xs={6}>
               <FormControl variant="outlined" className={classes.formControl}>
-                <InputLabel id="select-lable-3">Tài xế</InputLabel>
-                <Select
-                  labelId="select-lable-3"
-                  label="Tài xế"
-                  name="driver"
-                  onChange={handleChangeDriver}
-                  required
-                >
-                  {select?.drivers
-                    .filter((i) => i.familiarRoutes.includes(formData.fromto))
-                    .map((d) => (
-                      <MenuItem key={d._id} value={d}>
-                        {d.name}
-                      </MenuItem>
-                    ))}
-                </Select>
-              </FormControl>
-            </Grid>
-            <Grid item xs={6}>
-              <FormControl variant="outlined" className={classes.formControl}>
                 <InputLabel id="select-lable-2">Loại xe</InputLabel>
                 <Select
                   labelId="select-lable-2"
@@ -212,10 +195,34 @@ const ModalBody = ({ handleClose, coachTrip, setCoachTrip }) => {
                   required
                 >
                   {select?.coachs
-                    .filter((i) => select.seatMax >= i.seatNumber)
+                    .filter((i) => formData.seatMax === i.seatNumber)
                     .map((c) => (
                       <MenuItem key={c._id} value={c}>
                         {c.brand}
+                      </MenuItem>
+                    ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={6}>
+              <FormControl variant="outlined" className={classes.formControl}>
+                <InputLabel id="select-lable-3">Tài xế</InputLabel>
+                <Select
+                  labelId="select-lable-3"
+                  label="Tài xế"
+                  name="driver"
+                  onChange={handleChangeDriver}
+                  required
+                >
+                  {select?.drivers
+                    .filter(
+                      (i) =>
+                        i.familiarRoutes.includes(formData.fromto) &&
+                        i.seatMax >= formData.seatMax
+                    )
+                    .map((d) => (
+                      <MenuItem key={d._id} value={d}>
+                        {d.name}
                       </MenuItem>
                     ))}
                 </Select>
