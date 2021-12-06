@@ -159,7 +159,13 @@ export default function MyTable() {
                       {driver.seatMax}
                     </TableCell>
                     <TableCell style={{ width: 160 }} align="right">
-                      {driver.familiarRoutes.join(",")}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={() => alert(driver.familiarRoutes.join(","))}
+                      >
+                        Xem
+                      </Button>
                     </TableCell>
                     <TableCell align="right">
                       <Button
